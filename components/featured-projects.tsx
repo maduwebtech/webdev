@@ -1,0 +1,63 @@
+"use client";
+
+import { useRef } from "react";
+import Link from "next/link";
+import { motion, useInView } from "framer-motion";
+import { ExternalLink, GitBranch } from "lucide-react";
+import { projects } from "@/lib/data";
+import SectionHeading from "./section-heading";
+
+export default function FeaturedProjects() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const featured = projects.filter((p) => p.featured);
+
+  return (
+    <section className="py-24 relative">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sky-500/5 rounded-full blur-[150px]" />
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <SectionHeading title="Featured Projects" subtitle="Selected Work" />
+
+        <div ref={ref} className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featured.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.15, duration: 0.6 }}
+              className="group relative rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--card-bg)] hover:border-sky-500/30 transition-all duration-500"
+            >
+              <div className="aspect-video bg-gradient-to-br from-sky-500/10 to-violet-500/10 flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--card-bg)] to-transparent opacity-60" />
+                <span className="text-4xl font-bold text-[var(--text-heading)]/10">{project.title[0]}</span>
+              </div>
+              <div className="p-6">
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-[var(--input-bg)] text-[var(--text-muted)] border border-[var(--border)]">{tag}</span>
+                  ))}
+                </div>
+                <h3 className="text-lg font-semibold text-[var(--text-heading)] mb-2 group-hover:text-sky-400 transition-colors">{project.title}</h3>
+                <p className="text-sm text-[var(--text-muted)] line-clamp-2 mb-4">{project.description}</p>
+                <div className="flex items-center gap-3">
+                  <a href={project.liveUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-sky-400 hover:text-sky-300 transition-colors">
+                    Live Demo <ExternalLink className="h-3 w-3" />
+                  </a>
+                  <a href={project.githubUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-heading)] transition-colors">
+                    GitHub <GitBranch className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
+            View All Projects <GitBranch className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
