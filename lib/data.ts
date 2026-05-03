@@ -2,7 +2,7 @@ export const personalInfo = {
   name: "Muddsar Qayyum",
   email: "hello@muddsarqayyum.dev",
   phone: "+92 300 1234567",
-  location: "Lahore, Pakistan",
+  location: "Muzaffarabad, AJK",
   github: "https://github.com/muddsarqayyum",
   linkedin: "https://linkedin.com/in/muddsarqayyum",
   twitter: "https://twitter.com/muddsarqayyum",
@@ -101,6 +101,7 @@ export const projects = [
     liveUrl: "#",
     githubUrl: "#",
     featured: true,
+    // image: "/project1.jpg",
   },
   {
     id: 2,

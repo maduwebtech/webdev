@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ExternalLink, GitBranch, Users, Gauge, TrendingUp } from "lucide-react";
 import { projects, projectCategories } from "@/lib/data";
@@ -46,8 +47,18 @@ export default function ProjectsPage() {
                 className="group relative rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--card-bg)] hover:border-sky-500/20 transition-all duration-500"
               >
                 <div className="aspect-video bg-gradient-to-br from-sky-500/10 to-violet-500/10 flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--card-bg)] to-transparent opacity-60" />
-                  <span className="text-5xl font-bold text-[var(--text-heading)]/10">{project.title[0]}</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--card-bg)] to-transparent opacity-60 z-10" />
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <span className="text-5xl font-bold text-[var(--text-heading)]/10">{project.title[0]}</span>
+                  )}
                 </div>
                 <div className="p-6">
                   <div className="flex flex-wrap gap-2 mb-3">
